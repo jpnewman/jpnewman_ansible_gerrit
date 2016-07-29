@@ -1,0 +1,13 @@
+---
+- src: geerlingguy.firewall
+- src: geerlingguy.security
+- src: geerlingguy.git
+- src: geerlingguy.mysql
+- src: retr0h.logrotate
+- src: bennojoy.openldap_server
+- src: jpnewman.common
+- src: jpnewman.java
+- src: jpnewman.locale-timezone
+- src: jpnewman.gerrit
+- src: jpnewman.apache
+- src: jpnewman.openldap-server

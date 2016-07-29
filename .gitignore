@@ -1,0 +1,15 @@
+.DS_Store
+
+.vagrant
+
+roles/**
+files/certs/
+inventory/**
+
+playbook.retry
+
+# Sublime Text Workspace
+*.sublime-workspace
+
+# Log files
+*.log

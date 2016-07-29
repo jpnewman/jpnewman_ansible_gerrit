@@ -1,0 +1,85 @@
+---
+gerrit_config:
+  basePath: git
+  canonicalWebUrl: http://gerrit-server
+
+gerrit_database_type: MYSQL
+
+gerrit_database_mysql:
+  url: jdbc:mysql://localhost:3306/gerrit?user=gerrit&password=gerrit&useUnicode=false&characterEncoding=latin1
+  hostname: localhost
+  database: gerrit
+  username: gerrit
+  password: gerrit
+
+gerrit_index_type: LUCENE
+
+gerrit_auth_type: LDAP
+
+gerrit_auth_ldap:
+  server: ldaps://10.10.10.16:636
+  username: cn=gerrit_serviceuser,ou=People,dc=example,dc=com
+  password: password123
+  accountBase: ou=People,dc=example,dc=com
+  groupBase: ou=Groups,dc=example,dc=com
+  referral: follow
+  accountPattern: (uid=${username})
+  groupPattern: (cn=${groupname})
+  accountFullName: cn
+  accountMemberField: memberOf
+  accountEmailAddress: mail
+  readTimeout: 1s
+  sslVerify: false
+
+gerrit_auth:
+  restTokenPrivateKey: gxbO+u4vK/9mGGD3AqBUm5rsmcbAwBYwX17mBJmUpAFjdEx2
+  registerEmailPrivateKey: 58M62rC18B0fbcWSO25pBdPu+Ob0KaR+4PWnFd8QsbZIGepS
+
+gerrit_sendemail:
+  enable: false
+
+gerrit_container:
+  heapLimit: 4g
+  javaOptions: -server -XX:+PrintGCDetails -XX:MaxPermSize=256M -Xloggc:/var/gerrit/review/logs/gc.log -Djavax.net.ssl.trustStore=/var/gerrit/review/etc/cacerts -Djavax.net.ssl.trustStorePassword=changeit
+  user: gerrit
+
+gerrit_sshd:
+  listenAddress: "*:29418"
+  threads: 32
+
+gerrit_httpd:
+  listenUrl: proxy-https://127.0.0.1:8080/
+
+gerrit_cache:
+  directory: cache
+
+gerrit_receive:
+  checkReferencedObjectsAreReachable: false
+
+gerrit_plugins:
+  allowRemoteAdmin: true
+
+# Apache2
+apache_mods_enabled:
+  - rewrite.load
+  - ssl.load
+  - proxy.load
+  - proxy_http.load
+
+gerrit_apache_doc_root: /var/www
+gerrit_apache_log_dir: /var/log/gerrit
+
+# Plugins
+gerrit_war_plugins:
+  - download-commands
+  - replication
+  - commit-message-length-validator
+gerrit_plugins_folder: ../../files/plugins
+
+# Jeepyb
+gerrit_install_jeepyb: true
+
+# SSL
+ssl_cert_local_directory: ../../files/certs
+ssl_cert: notsecure.crt
+ssl_key: notsecure.key

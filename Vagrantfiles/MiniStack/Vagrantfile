@@ -1,0 +1,52 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.ssh.insert_key = false
+
+  config.vm.box = "ubuntu/trusty64"
+
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :machine
+  end
+
+  if Vagrant.has_plugin?("vagrant-hostmanager")
+    config.hostmanager.enabled = true
+    config.hostmanager.manage_host = true
+    config.hostmanager.manage_guest = false
+  end
+
+  config.vm.synced_folder '../..', '/vagrant'
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 2
+  end
+
+  config.vm.define "gerrit" do |node|
+    node.vm.hostname = "gerrit-server"
+    node.vm.network :private_network, ip: "10.10.10.15"
+
+    node.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+      ansible.limit = "all"
+      ansible.groups = {
+        "gerrit-server" => "gerrit"
+      }
+      ansible.verbose = "vvv"
+    end
+  end
+
+  config.vm.define "ldap" do |node|
+    node.vm.hostname = "ldap-server"
+    node.vm.network :private_network, ip: "10.10.10.16"
+
+    node.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+      ansible.limit = "all"
+      ansible.groups = {
+        "ldap-server" => "ldap"
+      }
+      ansible.verbose = "vvv"
+    end
+  end
+end

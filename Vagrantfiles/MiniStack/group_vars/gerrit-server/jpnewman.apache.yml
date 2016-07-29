@@ -1,0 +1,52 @@
+---
+
+apache_delete_default_vhost: true
+apache_vhosts_file: "gerrit.conf"
+
+apache_virtualhosts:
+  - listening_ip: "*"
+    listening_port: 80
+    server_name: localhost
+    document_root: /var/www
+    extra_directives: |
+      LogLevel info
+      ErrorLog {{ apache_log_path }}/localhost-error.log
+      CustomLog {{ apache_log_path }}/localhost-access.log combined env=!dontlog
+
+      RewriteEngine On
+      RewriteCond %{HTTPS} off
+      RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  - listening_ip: "*"
+    listening_port: 443
+    server_name: localhost
+    document_root: /var/www
+    SSLEngine: "On"
+    SSLCertificateFile: "{{ certificate_file }}"
+    SSLCertificateKeyFile: "{{ certificate_key_file }}"
+    _directories:
+      - _root: /var/www
+        Options: Indexes FollowSymLinks
+        AllowOverride: None
+        extra_directives: |
+          Require all granted
+    extra_directives: |
+        # Filter haproxy healthchecks from logs
+        SetEnvIf Request_URI "^/healthcheck$" dontlog
+
+        ProxyRequests Off
+        ProxyVia Off
+        ProxyPreserveHost On
+
+        <Proxy *>
+            Require all granted
+        </Proxy>
+
+        AllowEncodedSlashes On
+        ProxyPass        /healthcheck !
+        ProxyPass        /gitstats !
+        ProxyPass        /reviewstats !
+        ProxyPass        /html !
+        ProxyPass        /icons !
+
+        ProxyPass        /   http://localhost:8080/ nocanon

@@ -31,7 +31,7 @@ vagrant plugin install vagrant-hostmanager
 # Install Python requirements
 
 ~~~bash
-pip install -r requirements.txt
+sudo pip install -r requirements.txt
 ~~~
 
 # Install Ansible Roles

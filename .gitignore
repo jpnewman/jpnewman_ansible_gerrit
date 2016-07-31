@@ -3,8 +3,10 @@
 .vagrant
 
 roles/**
-files/certs/
 inventory/**
+
+files/certs/**
+!files/certs/notsecure.*
 
 playbook.retry
 

@@ -61,6 +61,10 @@ ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook playbook.yml -i .vagrant/provis
 ansible-playbook --syntax-check --list-tasks playbook.yml -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory
 ~~~
 
+## Server URL
+
+<https://gerrit-server/>
+
 # Boxes
 
 |Box|Description|Vagrant Name|Ansible Host|

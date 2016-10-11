@@ -67,7 +67,7 @@ apache_mods_enabled:
   - proxy_http.load
 
 gerrit_apache_doc_root: /var/www
-gerrit_apache_log_dir: /var/log/gerrit
+apache_log_dir: /var/log/gerrit
 
 # Plugins
 gerrit_war_plugins:

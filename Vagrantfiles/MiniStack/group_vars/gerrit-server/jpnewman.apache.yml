@@ -10,8 +10,8 @@ apache_virtualhosts:
     document_root: /var/www
     extra_directives: |
       LogLevel info
-      ErrorLog {{ apache_log_path }}/localhost-error.log
-      CustomLog {{ apache_log_path }}/localhost-access.log combined env=!dontlog
+      ErrorLog {{ apache_log_dir }}/localhost-error.log
+      CustomLog {{ apache_log_dir }}/localhost-access.log combined env=!dontlog
 
       RewriteEngine On
       RewriteCond %{HTTPS} off

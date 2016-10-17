@@ -42,13 +42,19 @@ ansible-galaxy install -r requirements.yml -p roles
 
 # Run
 
-### Testing
+~~~
+cd ./Vagrantfiles/MiniStack
+
+vagrant up
+~~~
+
+# Testing
 
 ~~~
 ansible-playbook --syntax-check --list-tasks playbook.yml -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory
 ~~~
 
-## Gerrit Plugins
+# Gerrit Plugins
 Plugins can be downloaded from the following URLs and placed in the ```files/plugins/``` folder.
 
   - <https://storage.cloud.google.com/gerritcodereview-plugins/plugins/master/delete-project/delete-project.jar>

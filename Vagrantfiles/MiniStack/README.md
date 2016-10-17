@@ -52,7 +52,7 @@ vagrant up
 ### Specific tags
 
 ~~~
-ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook playbook.yml -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --tags "gerrit-server"
+ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook playbook.yml -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --tags "gerrit_server"
 ~~~
 
 ### Testing
